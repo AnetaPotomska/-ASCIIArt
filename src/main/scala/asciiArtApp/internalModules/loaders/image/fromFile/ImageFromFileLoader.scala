@@ -14,7 +14,7 @@ trait ImageFromFileLoader extends RGBImageLoader {
     val image = ImageIO.read(file)
     val height = image.getHeight
     val width = image.getWidth
-    val grid = Array.ofDim[RGBPixel](width, height)
+    val grid = Array.ofDim[RGBPixel](height, width)
     for (h <- 0 until height) {
       for (w <- 0 until width) {
         val color = new Color(image.getRGB(w, h))
@@ -22,7 +22,7 @@ trait ImageFromFileLoader extends RGBImageLoader {
         val greenValue = color.getGreen
         val blueValue = color.getBlue
         val pixel = RGBPixel(redValue, greenValue, blueValue)
-        grid(w)(h) = pixel
+        grid(h)(w) = pixel
       }
     }
     RGBImage(RGBGrid(grid))

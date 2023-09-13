@@ -14,13 +14,13 @@ class GreyscaleToAsciiConverter(table: IntToCharConverter) extends Converter[Gre
   override def convert(item: GreyscaleImage): AsciiImage = {
     val height = item.getHeight
     val width = item.getWidth
-    val grid = Array.ofDim[AsciiPixel](width, height)
+    val grid = Array.ofDim[AsciiPixel](height, width)
     for (h <- 0 until height) {
       for (w <- 0 until width) {
         val oldPixel = item.getItemOnPos(h, w)
         val newAsciiValue = calculateAsciiValueFromGrey(oldPixel.grey)
         val newPixel = AsciiPixel(newAsciiValue)
-        grid(w)(h) = newPixel
+        grid(h)(w) = newPixel
       }
     }
     AsciiImage(AsciiGrid(grid))

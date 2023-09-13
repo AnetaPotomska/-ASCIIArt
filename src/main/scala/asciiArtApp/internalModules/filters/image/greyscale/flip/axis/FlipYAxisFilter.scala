@@ -9,7 +9,7 @@ class FlipYAxisFilter extends FlipFilter {
   override def filter(item: GreyscaleImage): GreyscaleImage = {
     val height = item.getHeight
     val width = item.getWidth
-    val grid = Array.ofDim[GreyscalePixel](width, height)
+    val grid = Array.ofDim[GreyscalePixel](height, width)
     for (h <- 0 until height) {
       for (w <- 0 until width) {
         val newRow = h

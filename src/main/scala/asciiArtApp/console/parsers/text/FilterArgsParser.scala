@@ -17,12 +17,21 @@ case class FilterArgsParser() extends TextParser[Seq[GreyscaleImageFilter]] {
           if (s + 1 >= source.length) {
             throw new Exception("Missing brightness value")
           }
-          val brightnessValueString = source(s + 1)
+          var brightnessValueString = source(s + 1)
+          var isNegative = false
+          if(brightnessValueString(0) == '-') {
+            isNegative = true
+            brightnessValueString = brightnessValueString.substring(1)
+          }
           // check if all chars are digits
           if (!(brightnessValueString forall Character.isDigit)) {
             throw new Exception("Brightness value isn't number")
           }
-          toRet = toRet.appended(new BrightnessFilter(brightnessValueString.toInt))
+          var brightnessValue = brightnessValueString.toInt
+          if(isNegative) {
+            brightnessValue = -1 * brightnessValue
+          }
+          toRet = toRet.appended(new BrightnessFilter(brightnessValue))
         }
         case _ =>
       }
