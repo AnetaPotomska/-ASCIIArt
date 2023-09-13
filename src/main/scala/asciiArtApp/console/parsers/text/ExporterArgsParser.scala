@@ -1,18 +1,18 @@
 package asciiArtApp.console.parsers.text
 
-import asciiArtApp.internalModules.exporters.asciiImage.{AsciiImageExporter, FileOutputExporter, StdOutputExporter}
+import externalModules.exporters.text.{FileOutputExporter, StdOutputExporter, TextExporter}
 
 import java.io.File
 
-case class ExporterArgsParser() extends TextParser[Seq[AsciiImageExporter]] {
-  override def parse(source: Array[String]): Seq[AsciiImageExporter] = {
+case class ExporterArgsParser() extends TextParser[Seq[TextExporter]] {
+  override def parse(source: Array[String]): Seq[TextExporter] = {
     val outputConsoleArgCnt = source.count(_.equals("--output-console"))
     val outputFileArgCnt = source.count(_.equals("--output-file"))
 
     if (outputConsoleArgCnt == 0 && outputFileArgCnt == 0) {
       throw new Exception("No export command was found")
     }
-    var toRet = Seq[AsciiImageExporter]()
+    var toRet = Seq[TextExporter]()
     for (s <- 0 until source.length) {
       source(s) match {
         case "--output-console" => toRet = toRet.appended(new StdOutputExporter)

@@ -1,11 +1,11 @@
 package asciiArtApp.console.controllers
 
-import asciiArtApp.internalModules.converters.{GreyscaleToAsciiConverter, RGBToGreyscaleConverter}
-import asciiArtApp.internalModules.exporters.asciiImage.AsciiImageExporter
+import asciiArtApp.internalModules.converters.{AsciiToStringConverter, GreyscaleToAsciiConverter, RGBToGreyscaleConverter}
 import asciiArtApp.internalModules.filters.image.greyscale.GreyscaleImageFilter
 import asciiArtApp.internalModules.loaders.image.RGBImageLoader
 import asciiArtApp.models.images.{AsciiImage, GreyscaleImage, RGBImage}
 import externalModules.converters.intToCharByTable.IntToCharConverter
+import externalModules.exporters.text.TextExporter
 
 class ConsoleController extends Controller {
   def loadImage(loader: RGBImageLoader) : RGBImage = {
@@ -30,9 +30,11 @@ class ConsoleController extends Controller {
     converter.convert(greyscaleImage)
   }
 
-  override def exportAsciiImage(asciiImage: AsciiImage, exporters: Seq[AsciiImageExporter]): Unit = {
+  override def exportAsciiImage(asciiImage: AsciiImage, exporters: Seq[TextExporter]): Unit = {
+    val asciiToStringConverter = new AsciiToStringConverter()
+    val stringFromAsciiImage = asciiToStringConverter.convert(asciiImage)
     for(e <- exporters) {
-      e.`export`(asciiImage)
+      e.`export`(stringFromAsciiImage)
     }
   }
 }

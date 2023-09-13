@@ -1,18 +1,18 @@
 package asciiArtApp.console.views
 
 import asciiArtApp.console.controllers.Controller
-import asciiArtApp.console.parsers.text.{ExporterArgsParser, FilterArgsParser, ImageArgParser, TableArgParser, TextParser}
-import asciiArtApp.internalModules.exporters.asciiImage.AsciiImageExporter
+import asciiArtApp.console.parsers.text.{ExporterArgsParser, FilterArgsParser, ImageArgParser, TableArgParser}
 import asciiArtApp.internalModules.filters.image.greyscale.GreyscaleImageFilter
 import asciiArtApp.internalModules.loaders.image.RGBImageLoader
 import externalModules.converters.intToCharByTable.IntToCharConverter
+import externalModules.exporters.text.TextExporter
 
 class ConsoleView(controller: Controller) {
   def run (args: Array[String]): Unit = {
     val loader: RGBImageLoader = ImageArgParser.apply().parse(args)
     val table: IntToCharConverter = TableArgParser.apply().parse(args)
     val filters: Seq[GreyscaleImageFilter] = FilterArgsParser.apply().parse(args)
-    val exporters: Seq[AsciiImageExporter] = ExporterArgsParser.apply().parse(args)
+    val exporters: Seq[TextExporter] = ExporterArgsParser.apply().parse(args)
 
     buildApplication(loader, table, filters, exporters)
   }
@@ -24,7 +24,7 @@ class ConsoleView(controller: Controller) {
   private def buildApplication(loader: RGBImageLoader,
                                table: IntToCharConverter,
                                filters: Seq[GreyscaleImageFilter],
-                               exporters: Seq[AsciiImageExporter]): Unit = {
+                               exporters: Seq[TextExporter]): Unit = {
     // LOAD
     val rgbImage = controller.loadImage(loader)
 

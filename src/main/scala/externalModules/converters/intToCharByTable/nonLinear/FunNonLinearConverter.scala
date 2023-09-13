@@ -4,31 +4,31 @@ package externalModules.converters.intToCharByTable.nonLinear
 class FunNonLinearConverter(chars: String = " .:-=+*#%@") extends NonLinearIntToCharConverter {
   override def convert(item: Int): Char = {
     if(item > 230) {
-      chars(0)
+      return chars(0)
     }
     else if (item > 204) {
-      chars(1)
+      return chars(1)
     }
     else if (item > 186) {
-      chars(2)
+      return chars(2)
     }
     else if (item > 169) {
-      chars(3)
+      return chars(3)
     }
     else if (item > 152) {
-      chars(4)
+      return chars(4)
     }
     else if (item > 130) {
-      chars(5)
+      return chars(5)
     }
     else if (item > 111) {
-      chars(6)
+      return chars(6)
     }
     else if (item > 56) {
-      chars(7)
+      return chars(7)
     }
     else if (item > 31) {
-      chars(8)
+      return chars(8)
     }
     chars(9)
   }
