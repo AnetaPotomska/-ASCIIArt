@@ -1,10 +1,6 @@
 package asciiArtApp.internalModules.filters.image.greyscale.singlePixelManipulation.brightness
 
-import asciiArtApp.internalModules.filters.image.greyscale.GreyscaleImageFilter
 import asciiArtApp.internalModules.filters.image.greyscale.singlePixelManipulation.SinglePixelManipulation
-import asciiArtApp.models.grids.GreyscaleGrid
-import asciiArtApp.models.images.{GreyscaleImage, Image, RGBImage}
-import asciiArtApp.models.pixels.{GreyscalePixel, Pixel, RGBPixel}
 
 class BrightnessFilter(brightnessValue: Int) extends SinglePixelManipulation() {
   private def determineFinalBrightnessValue(greyscaleValue: Int): Int = {

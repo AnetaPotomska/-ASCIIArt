@@ -1,6 +1,6 @@
 package externalModules.converters.intToCharByTable.nonLinear
 
-
+// SOURCE: https://paulbourke.net/dataformats/asciiart/
 class FunNonLinearConverter(chars: String = " .:-=+*#%@") extends NonLinearIntToCharConverter {
   override def convert(item: Int): Char = {
     if(item > 230) {

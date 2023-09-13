@@ -12,29 +12,19 @@ case class ExporterArgsParser() extends TextParser[Seq[AsciiImageExporter]] {
     if (outputConsoleArgCnt == 0 && outputFileArgCnt == 0) {
       throw new Exception("No export command was found")
     }
-    var ignore = false
-    val toRet = Seq[AsciiImageExporter]()
+    var toRet = Seq[AsciiImageExporter]()
     for (s <- 0 until source.length) {
-      if(!ignore) {
-        source(s) match {
-          case "--output-console" => toRet.appended(new StdOutputExporter)
-          case "--output-file" => {
-            if (s + 1 >= source.length) {
-              throw new Exception("Missing path for export")
-            }
-            val path = source(s + 1)
-            val file = new File(path)
-            if (!file.exists()) {
-              throw new Exception("Couldn't load file for export")
-            }
-            toRet.appended(new FileOutputExporter(file))
-            ignore = true
+      source(s) match {
+        case "--output-console" => toRet = toRet.appended(new StdOutputExporter)
+        case "--output-file" => {
+          if (s + 1 >= source.length) {
+            throw new Exception("Missing path for export")
           }
-          case _ =>
+          val path = source(s + 1)
+          val file = new File(path)
+          toRet = toRet.appended(new FileOutputExporter(file))
         }
-      }
-      else {
-        ignore = false
+        case _ =>
       }
     }
     toRet

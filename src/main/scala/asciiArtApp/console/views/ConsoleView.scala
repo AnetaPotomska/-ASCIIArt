@@ -5,9 +5,6 @@ import asciiArtApp.console.parsers.text.{ExporterArgsParser, FilterArgsParser, I
 import asciiArtApp.internalModules.exporters.asciiImage.AsciiImageExporter
 import asciiArtApp.internalModules.filters.image.greyscale.GreyscaleImageFilter
 import asciiArtApp.internalModules.loaders.image.RGBImageLoader
-import asciiArtApp.internalModules.loaders.image.fromFile.ImageFromFileLoader
-import asciiArtApp.internalModules.loaders.image.random.RandomImageLoader
-import asciiArtApp.models.images.RGBImage
 import externalModules.converters.intToCharByTable.IntToCharConverter
 
 class ConsoleView(controller: Controller) {
@@ -20,10 +17,14 @@ class ConsoleView(controller: Controller) {
     buildApplication(loader, table, filters, exporters)
   }
 
-  def buildApplication(loader: RGBImageLoader,
-                       table: IntToCharConverter,
-                       filters: Seq[GreyscaleImageFilter],
-                       exporters: Seq[AsciiImageExporter]): Unit = {
+  // FIXME
+  /*
+  A good indicator that you are doing it wrong is (awkwardly) storing some data (images) between controller invokes.
+   */
+  private def buildApplication(loader: RGBImageLoader,
+                               table: IntToCharConverter,
+                               filters: Seq[GreyscaleImageFilter],
+                               exporters: Seq[AsciiImageExporter]): Unit = {
     // LOAD
     val rgbImage = controller.loadImage(loader)
 

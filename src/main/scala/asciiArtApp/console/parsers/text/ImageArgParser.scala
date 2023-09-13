@@ -8,15 +8,19 @@ import java.io.File
 
 case class ImageArgParser() extends TextParser[RGBImageLoader] {
   override def parse(source: Array[String]): RGBImageLoader = {
+    // get count of image related args
     val pathImageArgCnt = source.count(_.equals("--image"))
     val randomImageArgCnt = source.count(_.equals("--image-random"))
 
+    // there is support only for exactly 1 image related argument
     if(pathImageArgCnt == 0 && randomImageArgCnt == 0) {
       throw new Exception("No image source was found")
     }
     else if(pathImageArgCnt + randomImageArgCnt > 1) {
       throw new Exception("Found too many image sources")
     }
+
+    // image from path will be used
     else if(pathImageArgCnt == 1) {
       val pathIndex = source.indexOf("--image") + 1
       if(pathIndex >= source.length) {
@@ -38,6 +42,8 @@ case class ImageArgParser() extends TextParser[RGBImageLoader] {
         case _ => throw new Exception("Couldn't load file with image")
       }
     }
+
+    // random image will be generated
     new RandomImageGenerator
   }
 }

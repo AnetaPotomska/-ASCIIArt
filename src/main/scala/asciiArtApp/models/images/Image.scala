@@ -11,6 +11,4 @@ trait Image[T <: Pixel] {
   def getWidth: Int = grid.getWidth
 
   def getItemOnPos(x: Int, y: Int): T = grid.getItemOnPos(x, y)
-
-  def setItemOnPos(x: Int, y: Int, item: T): Unit = grid.setItemOnPos(x, y, item)
 }

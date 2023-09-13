@@ -1,7 +1,6 @@
 package asciiArtApp.internalModules.loaders.image.fromFile
 
-import asciiArtApp.internalModules.loaders.image.RGBImageLoader
-import asciiArtApp.models.images.{Image, RGBImage}
+import asciiArtApp.models.images.RGBImage
 
 import java.io.File
 

@@ -1,17 +1,11 @@
 package asciiArtApp.console.controllers
+
 import asciiArtApp.internalModules.converters.{GreyscaleToAsciiConverter, RGBToGreyscaleConverter}
 import asciiArtApp.internalModules.exporters.asciiImage.AsciiImageExporter
-import asciiArtApp.internalModules.filters.Filter
 import asciiArtApp.internalModules.filters.image.greyscale.GreyscaleImageFilter
-import asciiArtApp.internalModules.loaders.Loader
 import asciiArtApp.internalModules.loaders.image.RGBImageLoader
-import asciiArtApp.internalModules.loaders.image.fromFile.ImageFromFileLoader
-import asciiArtApp.internalModules.loaders.image.random.RandomImageLoader
-import asciiArtApp.models.images.{AsciiImage, GreyscaleImage, Image, RGBImage}
+import asciiArtApp.models.images.{AsciiImage, GreyscaleImage, RGBImage}
 import externalModules.converters.intToCharByTable.IntToCharConverter
-import externalModules.exporters.Exporter
-
-import java.io.File
 
 class ConsoleController extends Controller {
   def loadImage(loader: RGBImageLoader) : RGBImage = {

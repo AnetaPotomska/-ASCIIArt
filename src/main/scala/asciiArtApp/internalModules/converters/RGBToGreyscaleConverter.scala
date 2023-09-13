@@ -14,13 +14,13 @@ class RGBToGreyscaleConverter extends Converter[RGBImage, GreyscaleImage] {
   override def convert(item: RGBImage): GreyscaleImage = {
     val height = item.getHeight
     val width = item.getWidth
-    val grid = Array.ofDim[GreyscalePixel](height, width)
-    for (h <- 0 to height) {
-      for (w <- 0 to width) {
+    val grid = Array.ofDim[GreyscalePixel](width, height)
+    for (h <- 0 until height) {
+      for (w <- 0 until width) {
         val oldPixel = item.getItemOnPos(h, w)
         val newGreyValue = calculateGreyValueFromRGB(oldPixel)
         val newPixel = GreyscalePixel(newGreyValue)
-        grid(h)(w) = newPixel
+        grid(w)(h) = newPixel
       }
     }
     GreyscaleImage(GreyscaleGrid(grid))

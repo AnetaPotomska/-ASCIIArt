@@ -14,9 +14,9 @@ class StreamAsciiImageExporter(outputStream: OutputStream) extends  AsciiImageEx
     val height = image.getHeight
     val width = image.getWidth
     var toWrite = ""
-    for (h <- 0 to height) {
+    for (h <- 0 until height) {
       var row = ""
-      for (w <- 0 to width) {
+      for (w <- 0 until width) {
         val asciiChar = image.getItemOnPos(h, w)
         row = row.appended(asciiChar.character)
       }
