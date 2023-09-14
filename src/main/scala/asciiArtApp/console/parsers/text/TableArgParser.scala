@@ -4,7 +4,7 @@ import externalModules.converters.intToCharByTable.IntToCharConverter
 import externalModules.converters.intToCharByTable.linear.{CustomLinearConverter, PaulBourkesConverter}
 import externalModules.converters.intToCharByTable.nonLinear.FunNonLinearConverter
 
-case class TableArgParser() extends TextParser[IntToCharConverter] {
+class TableArgParser() extends TextParser[IntToCharConverter] {
   override def parse(source: Array[String]): IntToCharConverter = {
     // get count of table related args
     val tableArgCnt = source.count(_.equals("--table"))
@@ -33,9 +33,12 @@ case class TableArgParser() extends TextParser[IntToCharConverter] {
     else if(customTableArgCnt == 1) {
       val charsIndex = source.indexOf("--custom-table") + 1
       if (charsIndex >= source.length) {
-        throw new Exception("No characters for table was found")
+        throw new Exception("No characters for table were found")
       }
       val chars = source(charsIndex)
+      if(chars.isEmpty) {
+        throw new Exception("Empty characters for table")
+      }
       return new CustomLinearConverter(chars)
     }
 

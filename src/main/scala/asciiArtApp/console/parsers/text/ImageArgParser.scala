@@ -6,7 +6,7 @@ import asciiArtApp.internalModules.loaders.image.random.RandomImageGenerator
 
 import java.io.File
 
-case class ImageArgParser() extends TextParser[RGBImageLoader] {
+class ImageArgParser() extends TextParser[RGBImageLoader] {
   override def parse(source: Array[String]): RGBImageLoader = {
     // get count of image related args
     val pathImageArgCnt = source.count(_.equals("--image"))
@@ -28,7 +28,7 @@ case class ImageArgParser() extends TextParser[RGBImageLoader] {
       }
       val path = source(pathIndex)
       val lastDotIndex = path.lastIndexOf('.')
-      if(lastDotIndex + 1 >= path.length) {
+      if(lastDotIndex == -1 || lastDotIndex + 1 >= path.length) {
         throw new Exception("No extension found in path to image")
       }
       val format = path.substring(lastDotIndex + 1)
@@ -39,7 +39,7 @@ case class ImageArgParser() extends TextParser[RGBImageLoader] {
       format match {
         case "jpg" => return new JpgLoader(file)
         case "png" => return new PngLoader(file)
-        case _ => throw new Exception("Couldn't load file with image")
+        case _ => throw new Exception("Not supported extension for image")
       }
     }
 

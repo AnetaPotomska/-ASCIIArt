@@ -9,10 +9,10 @@ import externalModules.exporters.text.TextExporter
 
 class ConsoleView(controller: Controller) {
   def run (args: Array[String]): Unit = {
-    val loader: RGBImageLoader = ImageArgParser.apply().parse(args)
-    val table: IntToCharConverter = TableArgParser.apply().parse(args)
-    val filters: Seq[GreyscaleImageFilter] = FilterArgsParser.apply().parse(args)
-    val exporters: Seq[TextExporter] = ExporterArgsParser.apply().parse(args)
+    val loader: RGBImageLoader = new ImageArgParser().parse(args)
+    val table: IntToCharConverter = new TableArgParser().parse(args)
+    val filters: Seq[GreyscaleImageFilter] = new FilterArgsParser().parse(args)
+    val exporters: Seq[TextExporter] = new ExporterArgsParser().parse(args)
 
     buildApplication(loader, table, filters, exporters)
   }

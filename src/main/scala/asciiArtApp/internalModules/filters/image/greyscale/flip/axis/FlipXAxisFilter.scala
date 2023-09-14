@@ -10,7 +10,7 @@ class FlipXAxisFilter extends FlipFilter {
     val height = item.getHeight
     val width = item.getWidth
     val grid = Array.ofDim[GreyscalePixel](height, width)
-    val halfHeight = height / 2
+    val halfHeight = (height / 2) + 1
     for (h <- 0 until halfHeight) {
       for (w <- 0 until width) {
         grid(h)(w) = item.getItemOnPos(height - h - 1, w)

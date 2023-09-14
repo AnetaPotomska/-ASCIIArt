@@ -4,25 +4,9 @@ import asciiArtApp.internalModules.filters.image.greyscale.GreyscaleImageFilter
 import asciiArtApp.internalModules.filters.image.greyscale.flip.axis.{FlipXAxisFilter, FlipYAxisFilter}
 import asciiArtApp.internalModules.filters.image.greyscale.singlePixelManipulation.brightness.BrightnessFilter
 import asciiArtApp.internalModules.filters.image.greyscale.singlePixelManipulation.invert.InvertFilter
+import externalModules.converters.stringToInt.StringNumberToIntConverter
 
-case class FilterArgsParser() extends TextParser[Seq[GreyscaleImageFilter]] {
-  private def processBrightnessValue(toProcess: String) : Int = {
-    var stringNumber = toProcess
-    var isNegative = false
-    if (stringNumber(0) == '-') {
-      isNegative = true
-      stringNumber = stringNumber.substring(1)
-    }
-    // check if all chars are digits
-    if (!(stringNumber forall Character.isDigit)) {
-      throw new Exception("Brightness value isn't number")
-    }
-    var brightnessValue = stringNumber.toInt
-    if (isNegative) {
-      brightnessValue = -1 * brightnessValue
-    }
-    brightnessValue
-  }
+class FilterArgsParser() extends TextParser[Seq[GreyscaleImageFilter]] {
   override def parse(source: Array[String]): Seq[GreyscaleImageFilter] = {
     var toRet = Seq[GreyscaleImageFilter]()
     for(s <- 0 until source.length) {
@@ -44,7 +28,7 @@ case class FilterArgsParser() extends TextParser[Seq[GreyscaleImageFilter]] {
             throw new Exception("Missing brightness value")
           }
           val brightnessValueString = source(s + 1)
-          val brightnessValue = processBrightnessValue(brightnessValueString)
+          val brightnessValue = new StringNumberToIntConverter().convert(brightnessValueString)
           toRet = toRet.appended(new BrightnessFilter(brightnessValue))
         }
         case _ =>
