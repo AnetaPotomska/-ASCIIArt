@@ -5,7 +5,7 @@ import asciiArtApp.models.grids.GreyscaleGrid
 import asciiArtApp.models.images.GreyscaleImage
 import asciiArtApp.models.pixels.GreyscalePixel
 
-trait SinglePixelManipulation extends GreyscaleImageFilter {
+abstract class SinglePixelManipulation extends GreyscaleImageFilter {
   def pixelManipulator(value: Int): Int
 
   override def filter(item: GreyscaleImage): GreyscaleImage = {

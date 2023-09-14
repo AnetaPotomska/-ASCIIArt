@@ -5,7 +5,7 @@ import org.scalatest.FunSuite
 
 class RGBGridTest extends FunSuite {
   val grid: Array[Array[RGBPixel]] = Array(Array(RGBPixel(1, 1, 1), RGBPixel(2, 2, 2)), Array(RGBPixel(3, 3, 3), RGBPixel(4, 4, 4)))
-  val rgbGrid = new RGBGrid(grid)
+  val rgbGrid: RGBGrid = RGBGrid(grid)
 
   test("Get height") {
     val height = rgbGrid.getHeight

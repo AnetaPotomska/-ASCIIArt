@@ -5,7 +5,7 @@ import org.scalatest.FunSuite
 
 class AsciiGridTest extends FunSuite {
   val grid: Array[Array[AsciiPixel]] = Array(Array(AsciiPixel('a'), AsciiPixel('b')), Array(AsciiPixel('c'), AsciiPixel('d')))
-  val asciiGrid = new AsciiGrid(grid)
+  val asciiGrid: AsciiGrid = AsciiGrid(grid)
 
   test("Get height") {
     val height = asciiGrid.getHeight

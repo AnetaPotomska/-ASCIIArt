@@ -14,7 +14,7 @@ class StringNumberToIntConverter extends StringToIntConverter {
       stringNumber = stringNumber.substring(1)
     }
     // check if all chars are digits
-    if (!(stringNumber forall Character.isDigit)) {
+    if (stringNumber.isEmpty || !(stringNumber forall Character.isDigit)) {
       throw new Exception("Given value isn't number")
     }
     var intValue = stringNumber.toInt

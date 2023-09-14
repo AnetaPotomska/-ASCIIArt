@@ -5,7 +5,7 @@ import org.scalatest.FunSuite
 
 class GreyscaleGridTest extends FunSuite {
   val grid: Array[Array[GreyscalePixel]] = Array(Array(GreyscalePixel(1), GreyscalePixel(2)), Array(GreyscalePixel(3), GreyscalePixel(4)))
-  val greyscaleGrid = new GreyscaleGrid(grid)
+  val greyscaleGrid: GreyscaleGrid = GreyscaleGrid(grid)
 
   test("Get height") {
     val height = greyscaleGrid.getHeight

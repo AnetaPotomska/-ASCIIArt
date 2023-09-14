@@ -12,6 +12,10 @@ class StringNumberToIntConverterTest extends FunSuite {
     assert(convert("50") == 50)
   }
 
+  test("Convert positive num string starting with + to int") {
+    assert(convert("+50") == 50)
+  }
+
   // ------------------------------------------------------------
   // NEGATIVE
 
@@ -34,6 +38,22 @@ class StringNumberToIntConverterTest extends FunSuite {
     val caught =
       intercept[Exception] {
         convert("-50asd")
+      }
+    assert(caught.getMessage == "Given value isn't number")
+  }
+
+  test("Convert non-number string starting only as negative") {
+    val caught =
+      intercept[Exception] {
+        convert("-")
+      }
+    assert(caught.getMessage == "Given value isn't number")
+  }
+
+  test("Convert non-number string starting only as positive") {
+    val caught =
+      intercept[Exception] {
+        convert("+")
       }
     assert(caught.getMessage == "Given value isn't number")
   }
