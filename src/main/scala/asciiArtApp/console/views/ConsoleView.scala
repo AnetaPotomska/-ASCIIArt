@@ -1,7 +1,7 @@
 package asciiArtApp.console.views
 
 import asciiArtApp.console.controllers.Controller
-import asciiArtApp.console.parsers.text.{ExporterArgsParser, FilterArgsParser, ImageArgParser, TableArgParser}
+import asciiArtApp.console.parsers.text.{ExportArgsParser, FilterArgsParser, ImageArgParser, TableArgParser}
 import asciiArtApp.internalModules.filters.image.greyscale.GreyscaleImageFilter
 import asciiArtApp.internalModules.loaders.image.RGBImageLoader
 import externalModules.converters.intToCharByTable.IntToCharConverter
@@ -12,7 +12,7 @@ class ConsoleView(controller: Controller) {
     val loader: RGBImageLoader = new ImageArgParser().parse(args)
     val table: IntToCharConverter = new TableArgParser().parse(args)
     val filters: Seq[GreyscaleImageFilter] = new FilterArgsParser().parse(args)
-    val exporters: Seq[TextExporter] = new ExporterArgsParser().parse(args)
+    val exporters: Seq[TextExporter] = new ExportArgsParser().parse(args)
 
     buildApplication(loader, table, filters, exporters)
   }

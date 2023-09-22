@@ -6,8 +6,8 @@ import helpers.TestWithFiles
 
 import java.io.File
 
-class ExporterArgsParserTest extends FunSuite with TestWithFiles {
-  def parse (source: Array[String]): Seq[TextExporter] = new ExporterArgsParser().parse(source)
+class ExportArgsParserTest extends FunSuite with TestWithFiles {
+  def parse (source: Array[String]): Seq[TextExporter] = new ExportArgsParser().parse(source)
   val fileName = getTestFile
 
 

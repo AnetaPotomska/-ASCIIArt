@@ -4,7 +4,7 @@ import externalModules.exporters.text.{FileOutputExporter, StdOutputExporter, Te
 
 import java.io.File
 
-class ExporterArgsParser() extends TextParser[Seq[TextExporter]] {
+class ExportArgsParser() extends TextParser[Seq[TextExporter]] {
   override def parse(source: Array[String]): Seq[TextExporter] = {
     val outputConsoleArgCnt = source.count(_.equals("--output-console"))
     val outputFileArgCnt = source.count(_.equals("--output-file"))
