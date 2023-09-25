@@ -17,4 +17,8 @@ case class GreyscaleGrid(private val items: Array[Array[GreyscalePixel]]) extend
     }
     items(x)(y)
   }
+
+  override def setItemOnPos(x: Int, y: Int, item: GreyscalePixel): Unit = {
+    items(x)(y) = item
+  }
 }

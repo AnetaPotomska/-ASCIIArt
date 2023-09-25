@@ -18,4 +18,8 @@ case class AsciiGrid(private val items: Array[Array[AsciiPixel]]) extends Grid[A
     }
     items(x)(y)
   }
+
+  override def setItemOnPos(x: Int, y: Int, item: AsciiPixel): Unit = {
+    items(x)(y) = item
+  }
 }

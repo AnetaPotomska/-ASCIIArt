@@ -16,16 +16,18 @@ class RandomImageGenerator(random: Random, minImageHeight: Int, maxImageHeight: 
     }
     val height = random.between(minImageHeight, maxImageHeight)
     val width = random.between(minImageWidth, maxImageWidth)
-    val grid = Array.ofDim[RGBPixel](height, width)
+    val array = Array.ofDim[RGBPixel](height, width)
+    val grid = RGBGrid(array)
+    val image = RGBImage(grid)
     for(h <- 0 until height) {
       for (w <- 0 until width) {
         val redValue = random.between(0, 255)
         val greenValue = random.between(0, 255)
         val blueValue = random.between(0, 255)
         val pixel = RGBPixel(redValue, greenValue, blueValue)
-        grid(h)(w) = pixel
+        image.setItemOnPos(h, w, pixel)
       }
     }
-    RGBImage(RGBGrid(grid))
+    image
   }
 }

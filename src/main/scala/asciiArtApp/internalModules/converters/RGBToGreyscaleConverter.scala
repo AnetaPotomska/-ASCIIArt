@@ -13,15 +13,15 @@ class RGBToGreyscaleConverter(calculateGreyValueFromRGB: RGBPixel => Int) extend
     if (height == 0 || width == 0) {
       return None
     }
-    val grid = Array.ofDim[GreyscalePixel](height, width)
-    for (h <- 0 until height) {
-      for (w <- 0 until width) {
-        val oldPixel = item.getItemOnPos(h, w)
-        val newGreyValue = calculateGreyValueFromRGB(oldPixel)
-        val newPixel = GreyscalePixel(newGreyValue)
-        grid(h)(w) = newPixel
-      }
+    val array = Array.ofDim[GreyscalePixel](height, width)
+    val grid = GreyscaleGrid(array)
+    val image = GreyscaleImage(grid)
+    for((h, w) <- item) {
+      val oldPixel = item.getItemOnPos(h, w)
+      val newGreyValue = calculateGreyValueFromRGB(oldPixel)
+      val newPixel = GreyscalePixel(newGreyValue)
+      image.setItemOnPos(h, w, newPixel)
     }
-    Some(GreyscaleImage(GreyscaleGrid(grid)))
+    Some(image)
   }
 }

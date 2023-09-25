@@ -18,4 +18,8 @@ case class RGBGrid(private val items: Array[Array[RGBPixel]]) extends Grid[RGBPi
     }
     items(x)(y)
   }
+
+  override def setItemOnPos(x: Int, y: Int, item: RGBPixel): Unit = {
+    items(x)(y) = item
+  }
 }

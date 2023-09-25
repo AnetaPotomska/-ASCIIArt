@@ -11,15 +11,15 @@ abstract class SinglePixelManipulation extends GreyscaleImageFilter {
   override def filter(item: GreyscaleImage): GreyscaleImage = {
     val height = item.getHeight
     val width = item.getWidth
-    val grid = Array.ofDim[GreyscalePixel](height, width)
-    for (h <- 0 until height) {
-      for (w <- 0 until width) {
-        val oldPixel = item.getItemOnPos(h, w)
-        val newGreyValue = pixelManipulator(oldPixel.grey)
-        val newPixel = GreyscalePixel(newGreyValue)
-        grid(h)(w) = newPixel
-      }
+    val array = Array.ofDim[GreyscalePixel](height, width)
+    val grid = GreyscaleGrid(array)
+    val image = GreyscaleImage(grid)
+    for ((h, w) <- item) {
+      val oldPixel = item.getItemOnPos(h, w)
+      val newGreyValue = pixelManipulator(oldPixel.grey)
+      val newPixel = GreyscalePixel(newGreyValue)
+      image.setItemOnPos(h, w, newPixel)
     }
-    GreyscaleImage(GreyscaleGrid(grid))
+    image
   }
 }
