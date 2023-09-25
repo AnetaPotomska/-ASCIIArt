@@ -29,7 +29,10 @@ class FilterArgsParser() extends TextParser[Seq[GreyscaleImageFilter]] {
           }
           val brightnessValueString = source(s + 1)
           val brightnessValue = new StringNumberToIntConverter().convert(brightnessValueString)
-          toRet = toRet.appended(new BrightnessFilter(brightnessValue))
+          if(brightnessValue.isEmpty) {
+            throw new Exception("Given value isn't number")
+          }
+          toRet = toRet.appended(new BrightnessFilter(brightnessValue.get))
         }
         case _ =>
       }

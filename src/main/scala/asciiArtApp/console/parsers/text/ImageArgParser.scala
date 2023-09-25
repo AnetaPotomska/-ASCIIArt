@@ -5,6 +5,7 @@ import asciiArtApp.internalModules.loaders.image.fromFile.{JpgLoader, PngLoader}
 import asciiArtApp.internalModules.loaders.image.random.RandomImageGenerator
 
 import java.io.File
+import scala.util.Random
 
 class ImageArgParser() extends TextParser[RGBImageLoader] {
   override def parse(source: Array[String]): RGBImageLoader = {
@@ -44,6 +45,6 @@ class ImageArgParser() extends TextParser[RGBImageLoader] {
     }
 
     // random image will be generated
-    new RandomImageGenerator
+    new RandomImageGenerator(Random, 20,200, 20, 200)
   }
 }

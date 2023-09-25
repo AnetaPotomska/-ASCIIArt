@@ -6,14 +6,13 @@ import asciiArtApp.models.pixels.{GreyscalePixel, RGBPixel}
 import externalModules.converters.Converter
 
 
-class RGBToGreyscaleConverter extends Converter[RGBImage, GreyscaleImage] {
-  private def calculateGreyValueFromRGB(pixel: RGBPixel) : Int = {
-    ((0.3 * pixel.red) + (0.59 * pixel.green) + (0.11 * pixel.blue)).floor.toInt
-  }
-
-  override def convert(item: RGBImage): GreyscaleImage = {
+class RGBToGreyscaleConverter(calculateGreyValueFromRGB: RGBPixel => Int) extends Converter[RGBImage, GreyscaleImage] {
+  override def convert(item: RGBImage): Option[GreyscaleImage] = {
     val height = item.getHeight
     val width = item.getWidth
+    if (height == 0 || width == 0) {
+      return None
+    }
     val grid = Array.ofDim[GreyscalePixel](height, width)
     for (h <- 0 until height) {
       for (w <- 0 until width) {
@@ -23,6 +22,6 @@ class RGBToGreyscaleConverter extends Converter[RGBImage, GreyscaleImage] {
         grid(h)(w) = newPixel
       }
     }
-    GreyscaleImage(GreyscaleGrid(grid))
+    Some(GreyscaleImage(GreyscaleGrid(grid)))
   }
 }

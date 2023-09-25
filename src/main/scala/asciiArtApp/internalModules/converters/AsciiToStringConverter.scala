@@ -4,9 +4,12 @@ import asciiArtApp.models.images.AsciiImage
 import externalModules.converters.Converter
 
 class AsciiToStringConverter extends Converter[AsciiImage, String] {
-  override def convert(item: AsciiImage): String = {
+  override def convert(item: AsciiImage): Option[String] = {
     val height = item.getHeight
     val width = item.getWidth
+    if (height == 0 || width == 0) {
+      return None
+    }
     var toRet = ""
     for (h <- 0 until height) {
       var row = ""
@@ -16,6 +19,6 @@ class AsciiToStringConverter extends Converter[AsciiImage, String] {
       }
       toRet += row.appended('\n')
     }
-    toRet
+    Some(toRet)
   }
 }

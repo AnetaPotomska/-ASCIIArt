@@ -8,12 +8,19 @@ import externalModules.converters.intToCharByTable.IntToCharConverter
 
 class GreyscaleToAsciiConverter(table: IntToCharConverter) extends Converter[GreyscaleImage, AsciiImage] {
   private def calculateAsciiValueFromGrey(grey: Int) : Char = {
-    table.convert(grey)
+    val toRet = table.convert(grey)
+    if(toRet.isEmpty) {
+      throw new Exception("Couldn't calculate ascii value from greyscale value")
+    }
+    toRet.get
   }
 
-  override def convert(item: GreyscaleImage): AsciiImage = {
+  override def convert(item: GreyscaleImage): Option[AsciiImage] = {
     val height = item.getHeight
     val width = item.getWidth
+    if(height == 0 || width == 0) {
+      return None
+    }
     val grid = Array.ofDim[AsciiPixel](height, width)
     for (h <- 0 until height) {
       for (w <- 0 until width) {
@@ -23,6 +30,8 @@ class GreyscaleToAsciiConverter(table: IntToCharConverter) extends Converter[Gre
         grid(h)(w) = newPixel
       }
     }
-    AsciiImage(AsciiGrid(grid))
+    val x = AsciiGrid(grid)
+
+    Some(AsciiImage(AsciiGrid(grid)))
   }
 }

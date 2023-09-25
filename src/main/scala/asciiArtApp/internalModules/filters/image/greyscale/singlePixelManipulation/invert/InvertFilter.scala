@@ -4,6 +4,12 @@ import asciiArtApp.internalModules.filters.image.greyscale.singlePixelManipulati
 
 class InvertFilter extends SinglePixelManipulation {
   private def determineFinalInvertedValue(greyscaleValue: Int): Int = {
+    if (greyscaleValue < 0) {
+      return 255
+    }
+    else if (greyscaleValue > 255) {
+      return 0
+    }
     255 - greyscaleValue
   }
 

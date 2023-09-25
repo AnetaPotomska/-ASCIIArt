@@ -1,7 +1,7 @@
 package externalModules.converters.stringToInt
 
 class StringNumberToIntConverter extends StringToIntConverter {
-  override def convert(item: String): Int = {
+  override def convert(item: String): Option[Int] = {
     var stringNumber = item
     var isNegative = false
     // correct if num starts with -
@@ -15,12 +15,12 @@ class StringNumberToIntConverter extends StringToIntConverter {
     }
     // check if all chars are digits
     if (stringNumber.isEmpty || !(stringNumber forall Character.isDigit)) {
-      throw new Exception("Given value isn't number")
+      return None
     }
     var intValue = stringNumber.toInt
     if (isNegative) {
       intValue = -1 * intValue
     }
-    intValue
+    Some(intValue)
   }
 }
