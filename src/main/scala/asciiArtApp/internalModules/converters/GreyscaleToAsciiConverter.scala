@@ -15,6 +15,7 @@ class GreyscaleToAsciiConverter(table: IntToCharConverter) extends Converter[Gre
     toRet.get
   }
 
+  // go through every grey-pixel and change it to ascii character
   override def convert(item: GreyscaleImage): Option[AsciiImage] = {
     val height = item.getHeight
     val width = item.getWidth

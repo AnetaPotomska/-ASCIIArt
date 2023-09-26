@@ -26,7 +26,7 @@ abstract class AbstractGrid[T <: Pixel](private val items: Array[Array[T]]) exte
     items(x)(y)
   }
 
-  private def checkCoordination(x: Int, y: Int): Boolean = {
+  override def checkCoordination(x: Int, y: Int): Boolean = {
     x >= 0 && x < getHeight && y >= 0 && y < getWidth
   }
 }

@@ -17,10 +17,13 @@ class TableArgParser() extends TextParser[IntToCharConverter] {
 
     // predefined table will be used based on name
     else if(tableArgCnt == 1) {
+      // look one ahead for parameter of this argument
       val nameIndex = source.indexOf("--table") + 1
       if (nameIndex >= source.length) {
         throw new Exception("No table name was found")
       }
+
+      // get and check name of this parameter
       val name = source(nameIndex)
       name match {
         case "bourke" => return new PaulBourkesConverter
@@ -31,13 +34,14 @@ class TableArgParser() extends TextParser[IntToCharConverter] {
 
     // custom linear table will be used using given characters
     else if(customTableArgCnt == 1) {
+      // look one ahead for parameter of this argument
       val charsIndex = source.indexOf("--custom-table") + 1
       if (charsIndex >= source.length) {
-        throw new Exception("No characters for table were found")
+        throw new Exception("No characters list for table were found")
       }
       val chars = source(charsIndex)
       if(chars.isEmpty) {
-        throw new Exception("Empty characters for table")
+        throw new Exception("Empty list of characters for table")
       }
       return new CustomLinearConverter(chars)
     }

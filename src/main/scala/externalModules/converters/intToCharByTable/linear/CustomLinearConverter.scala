@@ -7,9 +7,12 @@ package externalModules.converters.intToCharByTable.linear
 class CustomLinearConverter(chars: String) extends LinearIntToCharConverter {
   override def convert(item: Int): Option[Char] = {
     val len = chars.length
+
+    // check
     if(len > 255 || len < 0) {
       return None
     }
+
     // size of range for one character
     val range = 255.0 / len
 

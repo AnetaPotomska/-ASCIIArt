@@ -8,10 +8,12 @@ import externalModules.converters.stringToInt.StringNumberToIntConverter
 
 class FilterArgsParser() extends TextParser[Seq[GreyscaleImageFilter]] {
   override def parse(source: Array[String]): Seq[GreyscaleImageFilter] = {
+    // go through source and look for filter-related arguments
     var toRet = Seq[GreyscaleImageFilter]()
     for(s <- 0 until source.length) {
       source(s) match {
         case "--invert" => toRet = toRet.appended(new InvertFilter)
+        // look one ahead for parameter of this argument
         case "--flip" => {
           if (s + 1 >= source.length) {
             throw new Exception("Missing flip value")
@@ -23,11 +25,13 @@ class FilterArgsParser() extends TextParser[Seq[GreyscaleImageFilter]] {
             case _ => throw new Exception("Unknown flip value")
           }
         }
+        // look one ahead for parameter of this argument
         case "--brightness" => {
           if (s + 1 >= source.length) {
             throw new Exception("Missing brightness value")
           }
           val brightnessValueString = source(s + 1)
+          // convert this string to number if possible (accepted formats: num, -num, +num)
           val brightnessValue = new StringNumberToIntConverter().convert(brightnessValueString)
           if(brightnessValue.isEmpty) {
             throw new Exception("Given value isn't number")

@@ -13,6 +13,8 @@ trait Image[T <: Pixel] extends Iterable[(Int, Int)] {
 
   def setItemOnPos(x: Int, y: Int, item: T): Unit
 
+  def checkCoordination(x: Int, y: Int): Boolean
+
   // ---------------------------------------------------------
   // ITERATOR & FOREACH
   def iterator: Iterator[(Int, Int)]

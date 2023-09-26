@@ -8,6 +8,7 @@ import asciiArtApp.models.pixels.GreyscalePixel
 abstract class FlipAxisFilter extends FlipFilter {
   def exchangePixelsManipulator(newImage: GreyscaleImage, oldImage: GreyscaleImage, height: Int, width: Int): Unit
 
+  // modify image by axis
   override def filter(item: GreyscaleImage): Option[GreyscaleImage] = {
     val height = item.getHeight
     val width = item.getWidth

@@ -3,9 +3,12 @@ package externalModules.converters.intToCharByTable.nonLinear
 // SOURCE: https://paulbourke.net/dataformats/asciiart/
 class FunNonLinearConverter(chars: String = " .:-=+*#%@") extends NonLinearIntToCharConverter {
   override def convert(item: Int): Option[Char] = {
+    // check
     if(chars.length < 10) {
       return None
     }
+
+    // ugly distribution
     if(item > 230) {
       return Some(chars(0))
     }

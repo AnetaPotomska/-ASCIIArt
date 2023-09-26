@@ -7,6 +7,7 @@ import externalModules.converters.Converter
 
 
 class RGBToGreyscaleConverter(calculateGreyValueFromRGB: RGBPixel => Int) extends Converter[RGBImage, GreyscaleImage] {
+  // go through every rgb-pixel and change it to grey-pixel
   override def convert(item: RGBImage): Option[GreyscaleImage] = {
     val height = item.getHeight
     val width = item.getWidth

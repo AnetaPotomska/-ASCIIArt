@@ -4,6 +4,7 @@ import asciiArtApp.models.images.AsciiImage
 import externalModules.converters.Converter
 
 class AsciiToStringConverter extends Converter[AsciiImage, String] {
+  // read row by row and add newline to every end
   override def convert(item: AsciiImage): Option[String] = {
     val height = item.getHeight
     val width = item.getWidth

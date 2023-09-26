@@ -18,6 +18,7 @@ class ConsoleController extends Controller {
   }
 
   override def convertRGBImageToGreyscaleImage(rgbImage: RGBImage): GreyscaleImage = {
+    // RGBToGreyscaleConverter is parameterized with function for calculation grey value from rgb values
     val converter = new RGBToGreyscaleConverter((pixel: RGBPixel) => ((0.3 * pixel.red) + (0.59 * pixel.green) + (0.11 * pixel.blue)).floor.toInt)
     val toRet = converter.convert(rgbImage)
     if(toRet.isEmpty) {
@@ -29,11 +30,11 @@ class ConsoleController extends Controller {
   override def applyFiltersToGreyscaleImage(greyscaleImage: GreyscaleImage, filters: Seq[GreyscaleImageFilter]): GreyscaleImage = {
     var greyscaleImageToRet = greyscaleImage
     for(f <- filters) {
-      val greyscalelImageFiltered = f.filter(greyscaleImageToRet)
-      if(greyscalelImageFiltered.isEmpty) {
+      val greyscaleImageFiltered = f.filter(greyscaleImageToRet)
+      if(greyscaleImageFiltered.isEmpty) {
         throw new Exception("Couldn't apply requested filter(s)")
       }
-      greyscaleImageToRet = greyscalelImageFiltered.get
+      greyscaleImageToRet = greyscaleImageFiltered.get
     }
     greyscaleImageToRet
   }
@@ -48,11 +49,14 @@ class ConsoleController extends Controller {
   }
 
   override def exportAsciiImage(asciiImage: AsciiImage, exporters: Seq[TextExporter]): Unit = {
+    // prepare ascii image for export (convert it to string)
     val asciiToStringConverter = new AsciiToStringConverter()
     val stringFromAsciiImage = asciiToStringConverter.convert(asciiImage)
     if(stringFromAsciiImage.isEmpty) {
       throw new Exception("Couldn't convert ascii to string")
     }
+
+    // export
     for(e <- exporters) {
       e.`export`(stringFromAsciiImage.get)
     }

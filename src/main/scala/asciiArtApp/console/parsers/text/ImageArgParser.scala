@@ -23,17 +23,23 @@ class ImageArgParser() extends TextParser[RGBImageLoader] {
 
     // image from path will be used
     else if(pathImageArgCnt == 1) {
+      // look one ahead for parameter of this argument
       val pathIndex = source.indexOf("--image") + 1
       if(pathIndex >= source.length) {
         throw new Exception("No image path was found")
       }
       val path = source(pathIndex)
+      // get extension of this parameter (/path)
       val lastDotIndex = path.lastIndexOf('.')
       if(lastDotIndex == -1 || lastDotIndex + 1 >= path.length) {
         throw new Exception("No extension found in path to image")
       }
       val format = path.substring(lastDotIndex + 1)
+
+      // open file
       val file = new File(path)
+
+      // check file for existence, if-is-directory, and readability
       if(!file.exists()) {
         throw new Exception("Couldn't load file with image, file doesn't exist")
       }
@@ -43,6 +49,8 @@ class ImageArgParser() extends TextParser[RGBImageLoader] {
       else if (!file.canRead) {
         throw new Exception("Couldn't load file with image, file is not readable");
       }
+
+      // get and check file extension
       format match {
         case "jpg" => return new JpgLoader(file)
         case "png" => return new PngLoader(file)

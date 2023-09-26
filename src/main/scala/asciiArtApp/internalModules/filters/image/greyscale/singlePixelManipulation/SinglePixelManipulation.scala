@@ -8,6 +8,7 @@ import asciiArtApp.models.pixels.GreyscalePixel
 abstract class SinglePixelManipulation extends GreyscaleImageFilter {
   def pixelManipulator(value: Int): Int
 
+  // go through every pixel and change it's value with pixelManipulator
   override def filter(item: GreyscaleImage): Option[GreyscaleImage] = {
     val height = item.getHeight
     val width = item.getWidth

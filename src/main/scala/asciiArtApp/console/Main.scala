@@ -10,7 +10,7 @@ object Main extends App {
   val controller = new ConsoleController()
   val view = new ConsoleView(controller);
   try {
-    view.run(args.toArray)
+    view.run(args)
   }
   catch {
     case e: Exception =>

@@ -17,10 +17,6 @@ class ConsoleView(controller: Controller) {
     buildApplication(loader, table, filters, exporters)
   }
 
-  // FIXME
-  /*
-  A good indicator that you are doing it wrong is (awkwardly) storing some data (images) between controller invokes.
-   */
   private def buildApplication(loader: RGBImageLoader,
                                table: IntToCharConverter,
                                filters: Seq[GreyscaleImageFilter],

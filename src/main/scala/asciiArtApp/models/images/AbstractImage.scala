@@ -12,5 +12,7 @@ abstract class AbstractImage[T <: Pixel](private val grid: Grid[T]) extends Imag
 
   override def setItemOnPos(x: Int, y: Int, item: T): Unit = grid.setItemOnPos(x, y, item)
 
+  override def checkCoordination(x: Int, y: Int): Boolean = grid.checkCoordination(x, y)
+
   override def iterator: Iterator[(Int, Int)] = grid.iterator
 }

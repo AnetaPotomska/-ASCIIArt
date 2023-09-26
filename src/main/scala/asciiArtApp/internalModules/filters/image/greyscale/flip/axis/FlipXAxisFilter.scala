@@ -6,6 +6,7 @@ import asciiArtApp.models.images.GreyscaleImage
 import asciiArtApp.models.pixels.GreyscalePixel
 
 class FlipXAxisFilter extends FlipAxisFilter {
+  // go to half of image (from up to down) and in the meantime swap pixels (on whole width) for pixels on the other side of the image (upper part for bottom part)
   override def exchangePixelsManipulator(newImage: GreyscaleImage, oldImage: GreyscaleImage, height: Int, width: Int): Unit = {
     val halfHeight = (height / 2) + 1
     for (h <- 0 until halfHeight) {
