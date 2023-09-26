@@ -65,7 +65,7 @@ class InvertFilterTest extends FunSuite {
 
     val imageFiltered = filter(greyscaleImage)
     assert(imageFiltered.isDefined)
-    assert(imageFiltered.get.getItemOnPos(0, 0) == GreyscalePixel(60))
+    assert(imageFiltered.get.getItemOnPos(0, 0) == GreyscalePixel(255))
   }
 
   // ------------------------------------------------------------

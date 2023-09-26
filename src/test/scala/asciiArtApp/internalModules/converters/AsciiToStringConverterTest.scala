@@ -55,7 +55,7 @@ class AsciiToStringConverterTest extends FunSuite {
   // ------------------------------------------------------------
   // RECTANGLE PIXEL ASCII IMAGE (height < width)
 
-  test("Rectangle ascii image") {
+  test("Rectangle ascii image (height < width)") {
     val grid = Array.ofDim[AsciiPixel](1, 2)
     grid(0)(0) = AsciiPixel('a')
     grid(0)(1) = AsciiPixel('b')
@@ -69,7 +69,7 @@ class AsciiToStringConverterTest extends FunSuite {
   // ------------------------------------------------------------
   // RECTANGLE PIXEL ASCII IMAGE (height > width)
 
-  test("Rectangle ascii image") {
+  test("Rectangle ascii image (height > width)") {
     val grid = Array.ofDim[AsciiPixel](2, 1)
     grid(0)(0) = AsciiPixel('a')
     grid(1)(0) = AsciiPixel('b')

@@ -4,7 +4,6 @@ import asciiArtApp.internalModules.converters.{AsciiToStringConverter, Greyscale
 import asciiArtApp.internalModules.filters.image.greyscale.GreyscaleImageFilter
 import asciiArtApp.internalModules.loaders.image.RGBImageLoader
 import asciiArtApp.models.images.{AsciiImage, GreyscaleImage, RGBImage}
-import asciiArtApp.models.pixels.RGBPixel
 import externalModules.converters.intToCharByTable.IntToCharConverter
 import externalModules.exporters.text.TextExporter
 
@@ -17,9 +16,8 @@ class ConsoleController extends Controller {
     loadedImage.get
   }
 
-  override def convertRGBImageToGreyscaleImage(rgbImage: RGBImage): GreyscaleImage = {
+  override def convertRGBImageToGreyscaleImage(rgbImage: RGBImage, converter: RGBToGreyscaleConverter = new RGBToGreyscaleConverter()): GreyscaleImage = {
     // RGBToGreyscaleConverter is parameterized with function for calculation grey value from rgb values
-    val converter = new RGBToGreyscaleConverter()
     val toRet = converter.convert(rgbImage)
     if(toRet.isEmpty) {
       throw new Exception("Couldn't convert rgb image to grayscale image")

@@ -3,58 +3,55 @@ package externalModules.converters.stringToInt
 import org.scalatest.FunSuite
 
 class StringNumberToIntConverterTest extends FunSuite {
-  def convert(item: String): Int = new StringNumberToIntConverter().convert(item)
+  def convert(item: String): Option[Int] = new StringNumberToIntConverter().convert(item)
 
   // ------------------------------------------------------------
   // POSITIVE
 
   test("Convert positive num string to int") {
-    assert(convert("50") == 50)
+    assert(convert("+50").get == 50)
   }
 
   test("Convert positive num string starting with + to int") {
-    assert(convert("+50") == 50)
+    assert(convert("+50").get == 50)
   }
 
   // ------------------------------------------------------------
   // NEGATIVE
 
   test("Convert negative num string to int") {
-    assert(convert("-50") == -50)
+    assert(convert("-50").get == -50)
+  }
+
+  // ------------------------------------------------------------
+  // ZERO
+
+  test("Convert 0 num string to int") {
+    assert(convert("+0").get == 0)
+    assert(convert("-0").get == 0)
+    assert(convert("0").get == 0)
   }
 
   // ------------------------------------------------------------
   // STRING
 
   test("Convert non-number string") {
-    val caught =
-      intercept[Exception] {
-        convert("50asd")
-      }
-    assert(caught.getMessage == "Given value isn't number")
+    assert(convert("50asd").isEmpty)
   }
 
   test("Convert non-number string starting as negative") {
-    val caught =
-      intercept[Exception] {
-        convert("-50asd")
-      }
-    assert(caught.getMessage == "Given value isn't number")
+    assert(convert("-50asd").isEmpty)
   }
 
   test("Convert non-number string starting only as negative") {
-    val caught =
-      intercept[Exception] {
-        convert("-")
-      }
-    assert(caught.getMessage == "Given value isn't number")
+    assert(convert("-").isEmpty)
   }
 
   test("Convert non-number string starting only as positive") {
-    val caught =
-      intercept[Exception] {
-        convert("+")
-      }
-    assert(caught.getMessage == "Given value isn't number")
+    assert(convert("+").isEmpty)
+  }
+
+  test("Convert empty string") {
+    assert(convert("").isEmpty)
   }
 }

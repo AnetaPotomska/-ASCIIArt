@@ -9,7 +9,7 @@ class CustomLinearConverter(chars: String) extends LinearIntToCharConverter {
     val len = chars.length
 
     // check
-    if(len > 255 || len < 0) {
+    if(len > 255 || len <= 0) {
       return None
     }
 
@@ -20,8 +20,12 @@ class CustomLinearConverter(chars: String) extends LinearIntToCharConverter {
     var calc = item / range
 
     // correction
-    if (calc.ceil >= len)
+    if (calc.ceil >= len) {
       calc = len - 1
+    }
+    else if (calc.ceil < 0) {
+      calc = 0
+    }
 
     Some(chars(calc.toInt))
   }

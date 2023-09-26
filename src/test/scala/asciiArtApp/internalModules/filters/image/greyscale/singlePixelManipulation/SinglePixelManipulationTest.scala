@@ -2,7 +2,7 @@ package asciiArtApp.internalModules.filters.image.greyscale.singlePixelManipulat
 
 import asciiArtApp.models.grids.GreyscaleGrid
 import asciiArtApp.models.images.GreyscaleImage
-import asciiArtApp.models.pixels.{AsciiPixel, GreyscalePixel}
+import asciiArtApp.models.pixels.GreyscalePixel
 import org.mockito.MockitoSugar.when
 import org.scalatest.FunSuite
 import org.scalatestplus.mockito.MockitoSugar.mock
@@ -38,7 +38,7 @@ class SinglePixelManipulationTest extends FunSuite {
   }
 
   test("Custom manipulator - return is 0") {
-    assert(pixelManipulator(-60) == 60)
+    assert(pixelManipulator(-60) == 0)
   }
 
   // ------------------------------------------------------------

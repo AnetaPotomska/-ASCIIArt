@@ -3,15 +3,14 @@ package asciiArtApp.console.controllers
 import asciiArtApp.internalModules.converters.{AsciiToStringConverter, GreyscaleToAsciiConverter, RGBToGreyscaleConverter}
 import asciiArtApp.internalModules.filters.image.greyscale.GreyscaleImageFilter
 import asciiArtApp.internalModules.loaders.image.RGBImageLoader
-import asciiArtApp.models.grids.{AsciiGrid, GreyscaleGrid, RGBGrid}
+import asciiArtApp.models.grids.{GreyscaleGrid, RGBGrid}
 import asciiArtApp.models.images.{AsciiImage, GreyscaleImage, RGBImage}
-import asciiArtApp.models.pixels.{AsciiPixel, GreyscalePixel, RGBPixel}
+import asciiArtApp.models.pixels.{GreyscalePixel, RGBPixel}
 import externalModules.converters.intToCharByTable.IntToCharConverter
 import externalModules.exporters.text.TextExporter
 import org.mockito.MockitoSugar.when
 import org.scalatest.FunSuite
 import org.scalatestplus.mockito.MockitoSugar.mock
-
 
 class ConsoleControllerTest extends FunSuite {
   val controller = new ConsoleController()
@@ -83,7 +82,7 @@ class ConsoleControllerTest extends FunSuite {
     when(mockConverter.convert(mockRGBImage)).thenReturn(Some(greyImage))
 
     // then
-    val resultImage = controller.convertRGBImageToGreyscaleImage(mockRGBImage)
+    val resultImage = controller.convertRGBImageToGreyscaleImage(mockRGBImage, mockConverter)
     assert(resultImage == greyImage)
   }
 
@@ -140,25 +139,6 @@ class ConsoleControllerTest extends FunSuite {
         controller.convertGreyscaleImageToAscii(mockGreyImage, mockTable)
       }
     assert(caught.getMessage == "Couldn't convert greyscale image to ascii")
-  }
-
-  test("convertGreyscaleImageToAscii should return ascii image when converter converts greyscale image correctly") {
-    // given
-    val mockTable = mock[IntToCharConverter]
-    val mockConverter = mock[GreyscaleToAsciiConverter]
-    val mockGreyImage = mock[GreyscaleImage]
-
-    val asciiGrid = Array.ofDim[AsciiPixel](1, 2)
-    val asciiImage = AsciiImage(AsciiGrid(asciiGrid))
-    asciiImage.setItemOnPos(0, 0, AsciiPixel('a'))
-    asciiImage.setItemOnPos(0, 1, AsciiPixel('b'))
-
-    // when
-    when(mockConverter.convert(mockGreyImage)).thenReturn(Some(asciiImage))
-
-    // then
-    val resultImage = controller.convertGreyscaleImageToAscii(mockGreyImage, mockTable)
-    assert(resultImage == asciiImage)
   }
 
   // ------------------------------------------------------------

@@ -1,7 +1,5 @@
 package asciiArtApp.internalModules.loaders.image.random
 
-import asciiArtApp.models.images.RGBImage
-import org.mockito.Mockito.when
 import org.scalatest.FunSuite
 import org.scalatestplus.mockito.MockitoSugar.mock
 

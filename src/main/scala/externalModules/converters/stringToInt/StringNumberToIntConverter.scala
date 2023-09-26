@@ -2,6 +2,10 @@ package externalModules.converters.stringToInt
 
 class StringNumberToIntConverter extends StringToIntConverter {
   override def convert(item: String): Option[Int] = {
+    if(item.isEmpty) {
+      return None
+    }
+
     var stringNumber = item
     var isNegative = false
 

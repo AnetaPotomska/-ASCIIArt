@@ -1,9 +1,6 @@
 package asciiArtApp.internalModules.filters.image.greyscale.flip.axis
 
-import asciiArtApp.internalModules.filters.image.greyscale.flip.FlipFilter
-import asciiArtApp.models.grids.GreyscaleGrid
 import asciiArtApp.models.images.GreyscaleImage
-import asciiArtApp.models.pixels.GreyscalePixel
 
 class FlipXAxisFilter extends FlipAxisFilter {
   // go to half of image (from up to down) and in the meantime swap pixels (on whole width) for pixels on the other side of the image (upper part for bottom part)

@@ -55,7 +55,7 @@ class FlipYAxisFilterTest extends FunSuite {
 
   // ------------------------------------------------------------
   // RECTANGLE IMAGE (height < width)
-  test("Rectangle image flip by y") {
+  test("Rectangle image flip by y (height < width)") {
     val grid = Array.ofDim[GreyscalePixel](1, 2)
     grid(0)(0) = GreyscalePixel(20)
     grid(0)(1) = GreyscalePixel(30)
@@ -70,7 +70,7 @@ class FlipYAxisFilterTest extends FunSuite {
   // ------------------------------------------------------------
   // RECTANGLE IMAGE (height > width)
 
-  test("Square image flip by y") {
+  test("Square image flip by y (height > width)") {
     val grid = Array.ofDim[GreyscalePixel](2, 1)
     grid(0)(0) = GreyscalePixel(20)
     grid(1)(0) = GreyscalePixel(40)
@@ -78,7 +78,7 @@ class FlipYAxisFilterTest extends FunSuite {
 
     val imageFiltered = filter(image)
     assert(imageFiltered.isDefined)
-    assert(imageFiltered.get.getItemOnPos(0, 0) == GreyscalePixel(30))
-    assert(imageFiltered.get.getItemOnPos(1, 0) == GreyscalePixel(50))
+    assert(imageFiltered.get.getItemOnPos(0, 0) == GreyscalePixel(20))
+    assert(imageFiltered.get.getItemOnPos(1, 0) == GreyscalePixel(40))
   }
 }

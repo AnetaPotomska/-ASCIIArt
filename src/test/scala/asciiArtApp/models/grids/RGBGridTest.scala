@@ -95,4 +95,32 @@ class RGBGridTest extends FunSuite {
     assert(!squareGrid.checkCoordination(0, 5))
     assert(!squareGrid.checkCoordination(0, 9))
   }
+
+  // ------------------------------------------------------------
+  // ITERATOR
+
+  test("Doesn't have next") {
+    val height = 0
+    val width = 0
+    val newSquareGrid: RGBGrid = RGBGrid(Array.ofDim[RGBPixel](height, width))
+
+    assert(!newSquareGrid.iterator.hasNext)
+  }
+
+  test("Go through grid with iterator") {
+    val iterator = squareGrid.iterator
+    var coord = iterator.next
+    assert(coord._1 == 0 && coord._2 == 0)
+    coord = iterator.next
+    assert(coord._1 == 0 && coord._2 == 1)
+    coord = iterator.next
+    assert(coord._1 == 1 && coord._2 == 0)
+    coord = iterator.next
+    assert(coord._1 == 1 && coord._2 == 1)
+    val caught =
+      intercept[Exception] {
+        coord = iterator.next
+      }
+    assert(caught.getMessage == "No more elements in the grid")
+  }
 }

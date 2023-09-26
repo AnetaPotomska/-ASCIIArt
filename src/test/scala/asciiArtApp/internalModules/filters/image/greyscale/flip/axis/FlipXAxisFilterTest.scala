@@ -55,7 +55,7 @@ class FlipXAxisFilterTest extends FunSuite {
 
   // ------------------------------------------------------------
   // RECTANGLE IMAGE (height < width)
-  test("Rectangle image flip by x") {
+  test("Rectangle image flip by x (height < width)") {
     val grid = Array.ofDim[GreyscalePixel](1, 2)
     grid(0)(0) = GreyscalePixel(20)
     grid(0)(1) = GreyscalePixel(30)
@@ -69,7 +69,7 @@ class FlipXAxisFilterTest extends FunSuite {
 
   // ------------------------------------------------------------
   // RECTANGLE IMAGE (height > width)
-  test("Square image flip by x") {
+  test("Square image flip by x (height > width)") {
     val grid = Array.ofDim[GreyscalePixel](2, 1)
     grid(0)(0) = GreyscalePixel(20)
     grid(1)(0) = GreyscalePixel(40)

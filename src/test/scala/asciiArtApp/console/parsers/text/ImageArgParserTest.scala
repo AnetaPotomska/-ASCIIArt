@@ -101,7 +101,6 @@ class ImageArgParserTest extends FunSuite {
     val source = Array("--image", "iDontExist.png")
 
     when(mockFile.exists()).thenReturn(false)
-    when(mockFile.isDirectory).thenReturn(false)
     when(mockFile.canRead).thenReturn(true)
 
     val caught =
@@ -109,36 +108,6 @@ class ImageArgParserTest extends FunSuite {
         parse(source)
       }
     assert(caught.getMessage == "Couldn't load file with image, file doesn't exist")
-  }
-
-  test("Image with path leading to directory") {
-    val mockFile = mock[File]
-    val source = Array("--image", "src/")
-
-    when(mockFile.exists()).thenReturn(true)
-    when(mockFile.isDirectory).thenReturn(true)
-    when(mockFile.canRead).thenReturn(true)
-
-    val caught =
-      intercept[Exception] {
-        parse(source)
-      }
-    assert(caught.getMessage == "Couldn't load file with image, file is a directory")
-  }
-
-  test("Path image that isn't readable") {
-    val mockFile = mock[File]
-    val source = Array("--image", "path")
-
-    when(mockFile.exists()).thenReturn(true)
-    when(mockFile.isDirectory).thenReturn(false)
-    when(mockFile.canRead).thenReturn(false)
-
-    val caught =
-      intercept[Exception] {
-        parse(source)
-      }
-    assert(caught.getMessage == "Couldn't load file with image, file is not readable")
   }
 
   test("Image with existing path but with non-existing extension") {
