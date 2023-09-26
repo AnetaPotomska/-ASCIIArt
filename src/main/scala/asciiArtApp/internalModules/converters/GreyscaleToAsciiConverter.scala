@@ -18,7 +18,7 @@ class GreyscaleToAsciiConverter(table: IntToCharConverter) extends Converter[Gre
   override def convert(item: GreyscaleImage): Option[AsciiImage] = {
     val height = item.getHeight
     val width = item.getWidth
-    if(height == 0 || width == 0) {
+    if(height <= 0 || width <= 0) {
       return None
     }
     val array = Array.ofDim[AsciiPixel](height, width)

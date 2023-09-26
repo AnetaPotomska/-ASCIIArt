@@ -2,7 +2,7 @@ package externalModules.exporters.text
 
 import java.io.OutputStream
 
-class StreamTextExporter(outputStream: OutputStream) extends  TextExporter {
+class StreamTextExporter(outputStream: OutputStream) extends TextExporter {
   private var closed = false
 
   protected def exportToStream(text: String): Unit = {

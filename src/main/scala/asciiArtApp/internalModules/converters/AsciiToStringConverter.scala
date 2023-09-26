@@ -7,7 +7,7 @@ class AsciiToStringConverter extends Converter[AsciiImage, String] {
   override def convert(item: AsciiImage): Option[String] = {
     val height = item.getHeight
     val width = item.getWidth
-    if (height == 0 || width == 0) {
+    if (height <= 0 || width <= 0) {
       return None
     }
     var toRet = ""

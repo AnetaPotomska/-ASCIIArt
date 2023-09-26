@@ -10,10 +10,13 @@ import java.io.File
 import javax.imageio.ImageIO
 
 trait ImageFromFileLoader extends RGBImageLoader {
-  def loadImageWithImageIO(file: File): RGBImage = {
+  def loadImageWithImageIO(file: File): Option[RGBImage] = {
     val loadedImage = ImageIO.read(file)
     val height = loadedImage.getHeight
     val width = loadedImage.getWidth
+    if(height <= 0 || width <= 0) {
+      return None
+    }
     val array = Array.ofDim[RGBPixel](height, width)
     val grid = RGBGrid(array)
     val image = RGBImage(grid)
@@ -27,6 +30,6 @@ trait ImageFromFileLoader extends RGBImageLoader {
         image.setItemOnPos(h, w, pixel)
       }
     }
-    image
+    Some(image)
   }
 }

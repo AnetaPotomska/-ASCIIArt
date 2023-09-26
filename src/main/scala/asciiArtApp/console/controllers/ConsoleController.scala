@@ -10,7 +10,11 @@ import externalModules.exporters.text.TextExporter
 
 class ConsoleController extends Controller {
   def loadImage(loader: RGBImageLoader) : RGBImage = {
-    loader.load()
+    val loadedImage = loader.load()
+    if(loadedImage.isEmpty) {
+      throw new Exception("Couldn't load image")
+    }
+    loadedImage.get
   }
 
   override def convertRGBImageToGreyscaleImage(rgbImage: RGBImage): GreyscaleImage = {
@@ -25,7 +29,11 @@ class ConsoleController extends Controller {
   override def applyFiltersToGreyscaleImage(greyscaleImage: GreyscaleImage, filters: Seq[GreyscaleImageFilter]): GreyscaleImage = {
     var greyscaleImageToRet = greyscaleImage
     for(f <- filters) {
-      greyscaleImageToRet = f.filter(greyscaleImageToRet)
+      val greyscalelImageFiltered = f.filter(greyscaleImageToRet)
+      if(greyscalelImageFiltered.isEmpty) {
+        throw new Exception("Couldn't apply requested filter(s)")
+      }
+      greyscaleImageToRet = greyscalelImageFiltered.get
     }
     greyscaleImageToRet
   }

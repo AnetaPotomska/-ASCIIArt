@@ -10,7 +10,7 @@ class RGBToGreyscaleConverter(calculateGreyValueFromRGB: RGBPixel => Int) extend
   override def convert(item: RGBImage): Option[GreyscaleImage] = {
     val height = item.getHeight
     val width = item.getWidth
-    if (height == 0 || width == 0) {
+    if (height <= 0 || width <= 0) {
       return None
     }
     val array = Array.ofDim[GreyscalePixel](height, width)

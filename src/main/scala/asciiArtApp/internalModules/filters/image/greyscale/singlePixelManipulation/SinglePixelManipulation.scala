@@ -8,9 +8,12 @@ import asciiArtApp.models.pixels.GreyscalePixel
 abstract class SinglePixelManipulation extends GreyscaleImageFilter {
   def pixelManipulator(value: Int): Int
 
-  override def filter(item: GreyscaleImage): GreyscaleImage = {
+  override def filter(item: GreyscaleImage): Option[GreyscaleImage] = {
     val height = item.getHeight
     val width = item.getWidth
+    if (height <= 0 || width <= 0) {
+      return None
+    }
     val array = Array.ofDim[GreyscalePixel](height, width)
     val grid = GreyscaleGrid(array)
     val image = GreyscaleImage(grid)
@@ -20,6 +23,6 @@ abstract class SinglePixelManipulation extends GreyscaleImageFilter {
       val newPixel = GreyscalePixel(newGreyValue)
       image.setItemOnPos(h, w, newPixel)
     }
-    image
+    Some(image)
   }
 }

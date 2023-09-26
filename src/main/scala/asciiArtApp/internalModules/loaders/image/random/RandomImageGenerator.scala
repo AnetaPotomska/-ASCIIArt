@@ -10,9 +10,9 @@ class RandomImageGenerator(random: Random, minImageHeight: Int, maxImageHeight: 
   private def checkBounds(min: Int, max: Int): Boolean = {
     min > 0 && max > 0 && min <= max
   }
-  override def load(): RGBImage = {
+  override def load(): Option[RGBImage] = {
     if(!checkBounds(minImageHeight, maxImageHeight) || !checkBounds(minImageWidth, maxImageWidth)) {
-      throw new Exception("Bounds for random are incorrect")
+      return None
     }
     val height = random.between(minImageHeight, maxImageHeight)
     val width = random.between(minImageWidth, maxImageWidth)
@@ -28,6 +28,6 @@ class RandomImageGenerator(random: Random, minImageHeight: Int, maxImageHeight: 
         image.setItemOnPos(h, w, pixel)
       }
     }
-    image
+    Some(image)
   }
 }

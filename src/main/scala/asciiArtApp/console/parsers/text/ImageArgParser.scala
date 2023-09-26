@@ -35,7 +35,13 @@ class ImageArgParser() extends TextParser[RGBImageLoader] {
       val format = path.substring(lastDotIndex + 1)
       val file = new File(path)
       if(!file.exists()) {
-        throw new Exception("Couldn't load file with image")
+        throw new Exception("Couldn't load file with image, file doesn't exist")
+      }
+      else if (file.isDirectory) {
+        throw new Exception("Couldn't load file with image, file is a directory");
+      }
+      else if (!file.canRead) {
+        throw new Exception("Couldn't load file with image, file is not readable");
       }
       format match {
         case "jpg" => return new JpgLoader(file)

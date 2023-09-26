@@ -3,6 +3,8 @@ package asciiArtApp.models.grids
 import asciiArtApp.models.pixels.Pixel
 
 trait Grid[T <: Pixel] extends Iterable[(Int, Int)] {
+  // ---------------------------------------------------------
+  // BASIC INTERFACE
   def getHeight: Int
 
   def getWidth: Int
@@ -11,10 +13,8 @@ trait Grid[T <: Pixel] extends Iterable[(Int, Int)] {
 
   def setItemOnPos(x: Int, y: Int, item: T): Unit
 
-  def checkCoordination(x: Int, y: Int): Boolean = {
-    x >= 0 && x < getHeight && y >= 0 && y < getWidth
-  }
-
+  // ---------------------------------------------------------
+  // ITERATOR & FOREACH
   def iterator: Iterator[(Int, Int)] = new Iterator[(Int, Int)] {
     private var row = 0
     private var col = 0

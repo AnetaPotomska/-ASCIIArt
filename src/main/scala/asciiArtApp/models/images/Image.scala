@@ -1,9 +1,10 @@
 package asciiArtApp.models.images
 
-import asciiArtApp.models.grids.Grid
 import asciiArtApp.models.pixels.Pixel
 
 trait Image[T <: Pixel] extends Iterable[(Int, Int)] {
+  // ---------------------------------------------------------
+  // BASIC INTERFACE
   def getHeight: Int
 
   def getWidth: Int
@@ -12,8 +13,8 @@ trait Image[T <: Pixel] extends Iterable[(Int, Int)] {
 
   def setItemOnPos(x: Int, y: Int, item: T): Unit
 
-  def getGridCopy: Grid[T]
-
+  // ---------------------------------------------------------
+  // ITERATOR & FOREACH
   def iterator: Iterator[(Int, Int)]
 
   def foreach[U](f: (Int, Int) => U): Unit = {

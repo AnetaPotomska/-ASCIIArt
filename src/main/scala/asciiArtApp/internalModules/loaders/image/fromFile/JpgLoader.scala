@@ -5,7 +5,7 @@ import asciiArtApp.models.images.RGBImage
 import java.io.File
 
 class JpgLoader(file: File) extends ImageFromFileLoader {
-  override def load(): RGBImage = {
+  override def load(): Option[RGBImage] = {
     loadImageWithImageIO(file)
   }
 }
