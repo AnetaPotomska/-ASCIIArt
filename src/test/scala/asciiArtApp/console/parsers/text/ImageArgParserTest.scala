@@ -3,7 +3,11 @@ package asciiArtApp.console.parsers.text
 import asciiArtApp.internalModules.loaders.image.RGBImageLoader
 import asciiArtApp.internalModules.loaders.image.fromFile.{JpgLoader, PngLoader}
 import asciiArtApp.internalModules.loaders.image.random.RandomImageGenerator
+import org.mockito.MockitoSugar.when
 import org.scalatest.FunSuite
+import org.scalatestplus.mockito.MockitoSugar.mock
+
+import java.io.File
 
 class ImageArgParserTest extends FunSuite {
   def parse (source: Array[String]): RGBImageLoader = new ImageArgParser().parse(source)
@@ -93,12 +97,48 @@ class ImageArgParserTest extends FunSuite {
   }
 
   test("Image with non-existing path") {
+    val mockFile = mock[File]
     val source = Array("--image", "iDontExist.png")
+
+    when(mockFile.exists()).thenReturn(false)
+    when(mockFile.isDirectory).thenReturn(false)
+    when(mockFile.canRead).thenReturn(true)
+
     val caught =
       intercept[Exception] {
         parse(source)
       }
-    assert(caught.getMessage == "Couldn't load file with image")
+    assert(caught.getMessage == "Couldn't load file with image, file doesn't exist")
+  }
+
+  test("Image with path leading to directory") {
+    val mockFile = mock[File]
+    val source = Array("--image", "src/")
+
+    when(mockFile.exists()).thenReturn(true)
+    when(mockFile.isDirectory).thenReturn(true)
+    when(mockFile.canRead).thenReturn(true)
+
+    val caught =
+      intercept[Exception] {
+        parse(source)
+      }
+    assert(caught.getMessage == "Couldn't load file with image, file is a directory")
+  }
+
+  test("Path image that isn't readable") {
+    val mockFile = mock[File]
+    val source = Array("--image", "path")
+
+    when(mockFile.exists()).thenReturn(true)
+    when(mockFile.isDirectory).thenReturn(false)
+    when(mockFile.canRead).thenReturn(false)
+
+    val caught =
+      intercept[Exception] {
+        parse(source)
+      }
+    assert(caught.getMessage == "Couldn't load file with image, file is not readable")
   }
 
   test("Image with existing path but with non-existing extension") {
@@ -113,8 +153,14 @@ class ImageArgParserTest extends FunSuite {
   // ------------------------------------------------------------
   // RANDOM IMAGE ARG
 
-  test("Random image arg") {
+  test("Random image arg (as last)") {
     val source = Array("--image-random")
+    val image = parse(source)
+    assert(image.isInstanceOf[RandomImageGenerator])
+  }
+
+  test("Random image arg (not last)") {
+    val source = Array("--image-random", "other")
     val image = parse(source)
     assert(image.isInstanceOf[RandomImageGenerator])
   }

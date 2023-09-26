@@ -1,19 +1,22 @@
 package asciiArtApp.internalModules.loaders.image.fromFile
 
 import asciiArtApp.models.images.RGBImage
-import asciiArtApp.models.pixels.RGBPixel
+import helpers.TestWithFiles
 import org.scalatest.FunSuite
 
 import java.io.File
 
-class JpgLoaderTest extends FunSuite {
+class JpgLoaderTest extends FunSuite with TestWithFiles  {
   val path = "src/test/resources/somePic.jpg"
   val file = new File(path)
-  def load(): RGBImage = new JpgLoader(file).load()
-  val image: RGBImage = load()
+  val image: Option[RGBImage] = new JpgLoader(file).load()
+
+  // ------------------------------------------------------------
+  // LOAD EXISTING FILE
 
   test("Check size of loaded jpg picture") {
-    assert(image.getHeight == 2)
-    assert(image.getWidth == 2)
+    assert(image.isDefined)
+    assert(image.get.getHeight == 2)
+    assert(image.get.getWidth == 2)
   }
 }

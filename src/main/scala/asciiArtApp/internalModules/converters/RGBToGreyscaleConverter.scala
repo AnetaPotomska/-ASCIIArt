@@ -6,7 +6,9 @@ import asciiArtApp.models.pixels.{GreyscalePixel, RGBPixel}
 import externalModules.converters.Converter
 
 
-class RGBToGreyscaleConverter(calculateGreyValueFromRGB: RGBPixel => Int) extends Converter[RGBImage, GreyscaleImage] {
+class RGBToGreyscaleConverter(calculateGreyValueFromRGB: RGBPixel => Int
+                              = (pixel: RGBPixel) => ((0.3 * pixel.red) + (0.59 * pixel.green) + (0.11 * pixel.blue)).floor.toInt) // default
+  extends Converter[RGBImage, GreyscaleImage] {
   // go through every rgb-pixel and change it to grey-pixel
   override def convert(item: RGBImage): Option[GreyscaleImage] = {
     val height = item.getHeight

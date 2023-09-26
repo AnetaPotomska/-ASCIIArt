@@ -31,6 +31,7 @@ class FilterArgsParser() extends TextParser[Seq[GreyscaleImageFilter]] {
             throw new Exception("Missing brightness value")
           }
           val brightnessValueString = source(s + 1)
+
           // convert this string to number if possible (accepted formats: num, -num, +num)
           val brightnessValue = new StringNumberToIntConverter().convert(brightnessValueString)
           if(brightnessValue.isEmpty) {

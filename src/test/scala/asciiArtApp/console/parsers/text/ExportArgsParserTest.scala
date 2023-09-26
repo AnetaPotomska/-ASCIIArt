@@ -4,11 +4,9 @@ import externalModules.exporters.text.{FileOutputExporter, StdOutputExporter, Te
 import org.scalatest.FunSuite
 import helpers.TestWithFiles
 
-import java.io.File
-
 class ExportArgsParserTest extends FunSuite with TestWithFiles {
   def parse (source: Array[String]): Seq[TextExporter] = new ExportArgsParser().parse(source)
-  val fileName = getTestFile
+  val fileName: String = getTestFile
 
 
   // ------------------------------------------------------------
@@ -52,7 +50,7 @@ class ExportArgsParserTest extends FunSuite with TestWithFiles {
   }
 
   test("Output file arg without path") {
-    val source = Array(fileName, "--output-file")
+    val source = Array("--output-file")
     var exporters = Seq[TextExporter]()
     val caught =
       intercept[Exception] {

@@ -4,23 +4,95 @@ import asciiArtApp.models.pixels.RGBPixel
 import org.scalatest.FunSuite
 
 class RGBGridTest extends FunSuite {
-  val grid: Array[Array[RGBPixel]] = Array(Array(RGBPixel(1, 1, 1), RGBPixel(2, 2, 2)), Array(RGBPixel(3, 3, 3), RGBPixel(4, 4, 4)))
-  val rgbGrid: RGBGrid = RGBGrid(grid)
+  val squareGrid: RGBGrid = RGBGrid(Array(Array(
+    RGBPixel(0, 0, 0),
+    RGBPixel(1, 1, 1)),
+    Array(RGBPixel(2, 2, 2),
+      RGBPixel(3, 3, 3))))
+
+  // ------------------------------------------------------------
+  // HEIGHT
 
   test("Get height") {
-    val height = rgbGrid.getHeight
+    val height = squareGrid.getHeight
     assert(height == 2)
   }
 
+  // ------------------------------------------------------------
+  // WIDTH
+
   test("Get width") {
-    val width = rgbGrid.getWidth
+    val width = squareGrid.getWidth
     assert(width == 2)
   }
 
-  test("Get item o pos") {
-    assert(rgbGrid.getItemOnPos(0, 0) == RGBPixel(1, 1, 1))
-    assert(rgbGrid.getItemOnPos(0, 1) == RGBPixel(2, 2, 2))
-    assert(rgbGrid.getItemOnPos(1, 0) == RGBPixel(3, 3, 3))
-    assert(rgbGrid.getItemOnPos(1, 1) == RGBPixel(4, 4, 4))
+  // ------------------------------------------------------------
+  // SET ITEM ON POS
+
+  test("Set item o pos (in bounds)") {
+    val height = 2
+    val width = 2
+    val newSquareGrid: RGBGrid = RGBGrid(Array.ofDim[RGBPixel](height, width))
+
+    newSquareGrid.setItemOnPos(0, 0, RGBPixel(0, 0, 0))
+    newSquareGrid.setItemOnPos(0, 1, RGBPixel(1, 1, 1))
+    newSquareGrid.setItemOnPos(1, 0, RGBPixel(2, 2, 2))
+    newSquareGrid.setItemOnPos(1, 1, RGBPixel(3, 3, 3))
+
+    assert(newSquareGrid.getItemOnPos(0, 0) == RGBPixel(0, 0, 0))
+    assert(newSquareGrid.getItemOnPos(0, 1) == RGBPixel(1, 1, 1))
+    assert(newSquareGrid.getItemOnPos(1, 0) == RGBPixel(2, 2, 2))
+    assert(newSquareGrid.getItemOnPos(1, 1) == RGBPixel(3, 3, 3))
+  }
+
+  test("Set item o pos (out of bounds)") {
+    val height = 1
+    val width = 1
+    val newSquareGrid: RGBGrid = RGBGrid(Array.ofDim[RGBPixel](height, width))
+
+    val caught =
+      intercept[Exception] {
+        newSquareGrid.setItemOnPos(0, 1, RGBPixel(1, 1, 1))
+      }
+    assert(caught.getMessage == "Invalid coordinates")
+  }
+
+  // ------------------------------------------------------------
+  // GET ITEM ON POS
+
+  test("Get item o pos (in bounds)") {
+    assert(squareGrid.getItemOnPos(0, 0) == RGBPixel(0, 0, 0))
+    assert(squareGrid.getItemOnPos(0, 1) == RGBPixel(1, 1, 1))
+    assert(squareGrid.getItemOnPos(1, 0) == RGBPixel(2, 2, 2))
+    assert(squareGrid.getItemOnPos(1, 1) == RGBPixel(3, 3, 3))
+  }
+
+  test("Get item o pos (out of bounds)") {
+    val caught =
+      intercept[Exception] {
+        squareGrid.getItemOnPos(0, 2) == RGBPixel(0, 0, 0)
+      }
+    assert(caught.getMessage == "Invalid coordinates")
+  }
+
+  // ------------------------------------------------------------
+  // CHECK COORDINATION
+
+  test("Negative coordination") {
+    assert(!squareGrid.checkCoordination(-1, -1))
+    assert(!squareGrid.checkCoordination(-1, 0))
+    assert(!squareGrid.checkCoordination(0, -1))
+  }
+
+  test("X larger than height") {
+    assert(!squareGrid.checkCoordination(2, 0))
+    assert(!squareGrid.checkCoordination(5, 0))
+    assert(!squareGrid.checkCoordination(9, 0))
+  }
+
+  test("Y larger than width") {
+    assert(!squareGrid.checkCoordination(0, 2))
+    assert(!squareGrid.checkCoordination(0, 5))
+    assert(!squareGrid.checkCoordination(0, 9))
   }
 }

@@ -70,11 +70,36 @@ class FilterArgsParserTest extends FunSuite {
   // ------------------------------------------------------------
   // BRIGHTNESS
 
-  test("Brightness filter with arg") {
+  test("Brightness filter with arg in format num") {
     val source = Array("bla", "--brightness", "50")
     val filters = parse(source)
     assert(filters.length == 1)
     assert(filters(0).isInstanceOf[BrightnessFilter])
+  }
+
+  test("Brightness filter with arg in format +num") {
+    val source = Array("bla", "--brightness", "550")
+    val filters = parse(source)
+    assert(filters.length == 1)
+    assert(filters(0).isInstanceOf[BrightnessFilter])
+  }
+
+  test("Brightness filter with arg in format -num") {
+    val source = Array("bla", "--brightness", "-50")
+    val filters = parse(source)
+    assert(filters.length == 1)
+    assert(filters(0).isInstanceOf[BrightnessFilter])
+  }
+
+  test("Brightness filter with non-numeric-arg") {
+    val source = Array("bla", "--brightness", "n0")
+    var filters = Seq[GreyscaleImageFilter]()
+    val caught =
+      intercept[Exception] {
+        filters = parse(source)
+      }
+    assert(caught.getMessage == "Given value isn't number")
+    assert(filters.isEmpty)
   }
 
   test("Brightness filter without arg") {

@@ -19,7 +19,7 @@ class ConsoleController extends Controller {
 
   override def convertRGBImageToGreyscaleImage(rgbImage: RGBImage): GreyscaleImage = {
     // RGBToGreyscaleConverter is parameterized with function for calculation grey value from rgb values
-    val converter = new RGBToGreyscaleConverter((pixel: RGBPixel) => ((0.3 * pixel.red) + (0.59 * pixel.green) + (0.11 * pixel.blue)).floor.toInt)
+    val converter = new RGBToGreyscaleConverter()
     val toRet = converter.convert(rgbImage)
     if(toRet.isEmpty) {
       throw new Exception("Couldn't convert rgb image to grayscale image")

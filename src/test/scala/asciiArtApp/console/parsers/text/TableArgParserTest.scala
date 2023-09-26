@@ -94,7 +94,7 @@ class TableArgParserTest extends FunSuite {
       intercept[Exception] {
         parse(source)
       }
-    assert(caught.getMessage == "No characters for table were found")
+    assert(caught.getMessage == "No characters list for table were found")
   }
 
   test("Custom table with empty characters") {
@@ -103,6 +103,6 @@ class TableArgParserTest extends FunSuite {
       intercept[Exception] {
         parse(source)
       }
-    assert(caught.getMessage == "Empty characters for table")
+    assert(caught.getMessage == "Empty list of characters for table")
   }
 }

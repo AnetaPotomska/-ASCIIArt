@@ -7,12 +7,8 @@ import externalModules.converters.Converter
 import externalModules.converters.intToCharByTable.IntToCharConverter
 
 class GreyscaleToAsciiConverter(table: IntToCharConverter) extends Converter[GreyscaleImage, AsciiImage] {
-  private def calculateAsciiValueFromGrey(grey: Int) : Char = {
-    val toRet = table.convert(grey)
-    if(toRet.isEmpty) {
-      throw new Exception("Couldn't calculate ascii value from greyscale value")
-    }
-    toRet.get
+  private def calculateAsciiValueFromGrey(grey: Int) : Option[Char] = {
+    table.convert(grey)
   }
 
   // go through every grey-pixel and change it to ascii character
@@ -28,7 +24,10 @@ class GreyscaleToAsciiConverter(table: IntToCharConverter) extends Converter[Gre
     for((h, w) <- item) {
       val oldPixel = item.getItemOnPos(h, w)
       val newAsciiValue = calculateAsciiValueFromGrey(oldPixel.grey)
-      val newPixel = AsciiPixel(newAsciiValue)
+      if(newAsciiValue.isEmpty) {
+        return None
+      }
+      val newPixel = AsciiPixel(newAsciiValue.get)
       image.setItemOnPos(h, w, newPixel)
     }
     Some(image)
